@@ -3,8 +3,11 @@ package com.rafaelrocha.backend.services;
 import com.rafaelrocha.backend.dto.CategoryDTO;
 import com.rafaelrocha.backend.entities.Category;
 import com.rafaelrocha.backend.repositories.CategoryRepository;
+import com.rafaelrocha.backend.services.exceptions.DataBaseException;
 import com.rafaelrocha.backend.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,5 +55,16 @@ public class CategoryService {
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Id not found" + id);
         }
+    }
+
+    public void delete(Long id) {
+        try {
+            categoryRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw  new ResourceNotFoundException("Id not found "+id);
+        }catch (DataIntegrityViolationException e) {
+            throw new DataBaseException("Integrity violation");
+        }
+
     }
 }
