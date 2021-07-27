@@ -1,7 +1,10 @@
 package com.rafaelrocha.backend.services;
 
+import com.rafaelrocha.backend.dto.CategoryDTO;
 import com.rafaelrocha.backend.dto.ProductDTO;
+import com.rafaelrocha.backend.entities.Category;
 import com.rafaelrocha.backend.entities.Product;
+import com.rafaelrocha.backend.repositories.CategoryRepository;
 import com.rafaelrocha.backend.repositories.ProductRepository;
 import com.rafaelrocha.backend.services.exceptions.DataBaseException;
 import com.rafaelrocha.backend.services.exceptions.ResourceNotFoundException;
@@ -22,6 +25,9 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAllPaged(PageRequest pageRequest) {
         Page<Product> productList = productRepository.findAll(pageRequest);
@@ -39,7 +45,7 @@ public class ProductService {
     @Transactional
     public ProductDTO insert(ProductDTO productDTO) {
         Product productEntity = new Product();
-        //productEntity.setName(productDTO.getName());
+        copyDtoToEntity(productDTO, productEntity);
         productEntity = productRepository.save(productEntity);
         return new ProductDTO(productEntity);
     }
@@ -47,8 +53,8 @@ public class ProductService {
     @Transactional
     public ProductDTO update(Long id, ProductDTO productDTO) {
         try {
-            Product productEntity = productRepository.getOne(id);
-            //productEntity.setName(productDTO.getName());
+            Product productEntity = productRepository.getById(id);
+            copyDtoToEntity(productDTO, productEntity);
             productEntity = productRepository.save(productEntity);
 
             return new ProductDTO(productEntity);
@@ -65,6 +71,20 @@ public class ProductService {
         }catch (DataIntegrityViolationException e) {
             throw new DataBaseException("Integrity violation");
         }
+    }
 
+    private void copyDtoToEntity(ProductDTO productDTO, Product productEntity) {
+
+        productEntity.setName(productDTO.getName());
+        productEntity.setDescription(productDTO.getDescription());
+        productEntity.setDate(productDTO.getDate());
+        productEntity.setImgUrl(productDTO.getImgUrl());
+        productEntity.setPrice(productDTO.getPrice());
+
+        productEntity.getCategories().clear();
+        for(CategoryDTO categoryDTO : productDTO.getCategories()) {
+            Category category = categoryRepository.getById(categoryDTO.getId());
+            productEntity.getCategories().add(category);
+        }
     }
 }
