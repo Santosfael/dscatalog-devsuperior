@@ -54,3 +54,14 @@ INSERT INTO tb_product_category (product_id, category_id) VALUES (22, 3);
 INSERT INTO tb_product_category (product_id, category_id) VALUES (23, 3);
 INSERT INTO tb_product_category (product_id, category_id) VALUES (24, 3);
 INSERT INTO tb_product_category (product_id, category_id) VALUES (25, 3);
+
+INSERT INTO tb_client (name, cpf, income, birth_date, children, created_At) VALUES ('Sande', '531.359.920-80', 2000.00, TIMESTAMP WITH TIME ZONE '1980-09-05T20:09:57Z', 1, NOW());
+INSERT INTO tb_client (name, cpf, income, birth_date, children, created_At) VALUES ('Toddy', '028.571.640-92', 3100.00, TIMESTAMP WITH TIME ZONE '1988-08-27T16:44:14Z', 2, NOW());
+INSERT INTO tb_client (name, cpf, income, birth_date, children, created_At) VALUES ('Tera', '618.777.590-23', 1400.00, TIMESTAMP WITH TIME ZONE '1983-07-23T05:26:31Z', 3, NOW());
+INSERT INTO tb_client (name, cpf, income, birth_date, children, created_At) VALUES ('Germain', '598.889.830-08', 1700.00, TIMESTAMP WITH TIME ZONE '1986-03-25T02:03:23Z', 1, NOW());
+INSERT INTO tb_client (name, cpf, income, birth_date, children, created_At) VALUES ('Sheelagh', '144.466.190-63', 2010.00, TIMESTAMP WITH TIME ZONE '1984-04-14T21:35:33Z', 3, NOW());
+INSERT INTO tb_client (name, cpf, income, birth_date, children, created_At) VALUES ('Kitty', '520.500.620-01', 4000.00, TIMESTAMP WITH TIME ZONE '1985-12-25T15:46:02Z', 2, NOW());
+INSERT INTO tb_client (name, cpf, income, birth_date, children, created_At) VALUES ('Dorthea', '260.485.700-66', 5000.00, TIMESTAMP WITH TIME ZONE '1989-06-05T01:11:16Z', 2, NOW());
+INSERT INTO tb_client (name, cpf, income, birth_date, children, created_At) VALUES ('Lesly', '406.109.970-17', 5200.00, TIMESTAMP WITH TIME ZONE '1984-02-21T23:27:33Z', 1, NOW());
+INSERT INTO tb_client (name, cpf, income, birth_date, children, created_At) VALUES ('Oralia', '029.350.350-89', 3000.00, TIMESTAMP WITH TIME ZONE '1981-02-23T06:44:13Z', 1, NOW());
+INSERT INTO tb_client (name, cpf, income, birth_date, children, created_At) VALUES ('Henri', '802.488.450-04', 1200.00, TIMESTAMP WITH TIME ZONE '1983-11-04T21:26:37Z', 3, NOW());
