@@ -1,7 +1,12 @@
+import Navbar from './core/components/Navbar';
+
+import './core/assets/styles/custom.scss';
+import './App.scss';
+
 function App() {
   return (
     <div className="App">
-      <h1>Hello World</h1>
+      <Navbar />
     </div>
   );
 }
