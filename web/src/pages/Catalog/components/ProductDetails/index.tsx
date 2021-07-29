@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import { ReactComponent as ArrowIcon } from '../../../../core/assets/images/arrow-right.svg';
-import ProductPrice from '../../../../core/components/ProductPrice';
-import { Product } from '../../../../core/types/Product';
-import Api from '../../../../core/utils/api';
+import { ReactComponent as ArrowIcon } from 'core/assets/images/arrow-right.svg';
+import ProductDescriptionLoader from '../Loaders/ProductDescriptionLoader';
+import ProductPrice from 'core/components/ProductPrice';
+import ProductInfoLoader from '../Loaders/ProductInfoLoader';
+import { Product } from 'core/types/Product';
+import Api from 'core/utils/api';
 import './styles.scss';
 
 type ParamsType = {
@@ -14,10 +16,13 @@ type ParamsType = {
 function ProductDetails() {
     const { productId } = useParams<ParamsType>();
     const [product, setProduct] = useState<Product>();
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(()=> {
+        setIsLoading(true);
         Api({url: `/products/${productId}`})
-            .then(response => setProduct(response.data));
+            .then(response => setProduct(response.data))
+            .finally(()=> setIsLoading(false));
     }, [productId]);
 
     return (
@@ -31,25 +36,33 @@ function ProductDetails() {
                 </Link>
                 <div className="row">
                     <div className="col-6 pr-5">
-                        <div className="product-details-card text-center">
-                            <img src={product?.imgUrl} alt={product?.name} className="product-details-image" />
-                        </div>
-                        <h1 className="product-details-name">
-                            {product?.name}
-                        </h1>
-                        {
-                            product?.price &&
-                            <ProductPrice price={product?.price} />
+                        {isLoading ? <ProductInfoLoader /> :
+                            <>
+                                <div className="product-details-card text-center">
+                                    <img src={product?.imgUrl} alt={product?.name} className="product-details-image" />
+                                </div>
+                                <h1 className="product-details-name">
+                                    {product?.name}
+                                </h1>
+                                {
+                                    product?.price &&
+                                    <ProductPrice price={product?.price} />
+                                }
+                            </>
                         }
                     </div>
                     
                     <div className="col-6 product-details-card">
-                        <h1 className="product-description-title">
-                            Descrição do produto
-                        </h1>
-                        <p className="product-description-text">
-                            {product?.description}
-                        </p>
+                        { isLoading ? <ProductDescriptionLoader /> :
+                            <>
+                                <h1 className="product-description-title">
+                                    Descrição do produto
+                                </h1>
+                                <p className="product-description-text">
+                                    {product?.description}
+                                </p>
+                            </>
+                        }
                     </div>
                 </div>
             </div>
