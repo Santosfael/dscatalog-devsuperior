@@ -1,11 +1,14 @@
+import AdminRoutes from './admin.routes';
 import Navbar from './components/Navbar';
 import './styles.scss';
 
 function Admin() {
     return (
-        <div>
+        <div className="admin-container">
             <Navbar />
-            <h1>Admin</h1>
+            <div className="admin-content">
+                <AdminRoutes />
+            </div>
         </div>
     )
 }
