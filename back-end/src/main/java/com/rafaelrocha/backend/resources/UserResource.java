@@ -1,6 +1,7 @@
 package com.rafaelrocha.backend.resources;
 
 import com.rafaelrocha.backend.dto.UserDTO;
+import com.rafaelrocha.backend.dto.UserInsertDTO;
 import com.rafaelrocha.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +25,7 @@ public class UserResource {
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction,
-            @RequestParam(value = "orderBy", defaultValue = "name") String orderBy
+            @RequestParam(value = "orderBy", defaultValue = "firstName") String orderBy
     ) {
 
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
@@ -40,11 +41,11 @@ public class UserResource {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> insert(@RequestBody UserDTO userDTO) {
-        userDTO = userService.insert(userDTO);
+    public ResponseEntity<UserDTO> insert(@RequestBody UserInsertDTO userDTO) {
+        UserDTO userNewDTO = userService.insert(userDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(userDTO.getId()).toUri();
-        return ResponseEntity.created(uri).body(userDTO);
+                .buildAndExpand(userNewDTO.getId()).toUri();
+        return ResponseEntity.created(uri).body(userNewDTO);
     }
 
     @PutMapping(value = "/{id}")

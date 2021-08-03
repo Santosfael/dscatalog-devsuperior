@@ -1,7 +1,11 @@
 package com.rafaelrocha.backend.services;
 
+import com.rafaelrocha.backend.dto.RoleDTO;
 import com.rafaelrocha.backend.dto.UserDTO;
+import com.rafaelrocha.backend.dto.UserInsertDTO;
+import com.rafaelrocha.backend.entities.Role;
 import com.rafaelrocha.backend.entities.User;
+import com.rafaelrocha.backend.repositories.RoleRepository;
 import com.rafaelrocha.backend.repositories.UserRepository;
 import com.rafaelrocha.backend.services.exceptions.DataBaseException;
 import com.rafaelrocha.backend.services.exceptions.ResourceNotFoundException;
@@ -10,6 +14,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +25,13 @@ import java.util.Optional;
 public class UserService {
 
     @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Transactional(readOnly = true)
     public Page<UserDTO> findAllPaged(PageRequest pageRequest) {
@@ -37,9 +48,10 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO insert(UserDTO userDTO) {
+    public UserDTO insert(UserInsertDTO userDTO) {
         User userEntity = new User();
         copyDtoToEntity(userDTO, userEntity);
+        userEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         userEntity = userRepository.save(userEntity);
         return new UserDTO(userEntity);
     }
@@ -72,7 +84,12 @@ public class UserService {
         userEntity.setFirstName(userDTO.getFirstName());
         userEntity.setLastName(userDTO.getLastName());
         userEntity.setEmail(userDTO.getEmail());
-        userEntity.setPassword(userDTO.getPassword());
+
+        userEntity.getRoles().clear();
+        for(RoleDTO roleDTO :userDTO.getRoles()) {
+            Role role = roleRepository.getOne(roleDTO.getId());
+            userEntity.getRoles().add(role);
+        }
 
     }
 }

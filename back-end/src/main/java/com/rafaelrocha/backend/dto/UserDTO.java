@@ -3,7 +3,8 @@ package com.rafaelrocha.backend.dto;
 import com.rafaelrocha.backend.entities.User;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -12,17 +13,17 @@ public class UserDTO implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-    private String password;
+
+    Set<RoleDTO> roles = new HashSet<>();
 
     public UserDTO() {
     }
 
-    public UserDTO(Long id, String firstName, String lastName, String email, String password) {
+    public UserDTO(Long id, String firstName, String lastName, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
     }
 
     public UserDTO(User user) {
@@ -30,7 +31,7 @@ public class UserDTO implements Serializable {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
-        this.password = user.getPassword();
+        user.getRoles().forEach(role -> this.roles.add(new RoleDTO(role)));
     }
 
     public Long getId() {
@@ -65,11 +66,7 @@ public class UserDTO implements Serializable {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public Set<RoleDTO> getRoles() {
+        return roles;
     }
 }
