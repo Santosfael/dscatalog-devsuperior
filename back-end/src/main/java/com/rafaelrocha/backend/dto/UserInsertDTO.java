@@ -1,5 +1,8 @@
 package com.rafaelrocha.backend.dto;
 
+import com.rafaelrocha.backend.services.validation.UserInsertValid;
+
+@UserInsertValid
 public class UserInsertDTO extends UserDTO {
     private static final long serialVersionUID = 1L;
 
