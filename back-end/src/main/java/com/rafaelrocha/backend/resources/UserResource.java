@@ -2,6 +2,7 @@ package com.rafaelrocha.backend.resources;
 
 import com.rafaelrocha.backend.dto.UserDTO;
 import com.rafaelrocha.backend.dto.UserInsertDTO;
+import com.rafaelrocha.backend.dto.UserUpdateDTO;
 import com.rafaelrocha.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -50,9 +51,9 @@ public class UserResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable Long id,@Valid @RequestBody UserDTO userDTO) {
-        userDTO = userService.update(id, userDTO);
-        return ResponseEntity.ok().body(userDTO);
+    public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO userDTO) {
+        UserDTO userNewDTO = userService.update(id, userDTO);
+        return ResponseEntity.ok().body(userNewDTO);
     }
 
     @DeleteMapping(value = "/{id}")

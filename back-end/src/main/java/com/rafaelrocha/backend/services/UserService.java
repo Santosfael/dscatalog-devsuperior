@@ -3,6 +3,7 @@ package com.rafaelrocha.backend.services;
 import com.rafaelrocha.backend.dto.RoleDTO;
 import com.rafaelrocha.backend.dto.UserDTO;
 import com.rafaelrocha.backend.dto.UserInsertDTO;
+import com.rafaelrocha.backend.dto.UserUpdateDTO;
 import com.rafaelrocha.backend.entities.Role;
 import com.rafaelrocha.backend.entities.User;
 import com.rafaelrocha.backend.repositories.RoleRepository;
@@ -57,7 +58,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO update(Long id, UserDTO userDTO) {
+    public UserDTO update(Long id, UserUpdateDTO userDTO) {
         try {
             User userEntity = userRepository.getOne(id);
             copyDtoToEntity(userDTO, userEntity);
