@@ -1,10 +1,9 @@
 package com.rafaelrocha.backend.services.validation;
 
-import com.rafaelrocha.backend.dto.UserInsertDTO;
 import com.rafaelrocha.backend.dto.UserUpdateDTO;
 import com.rafaelrocha.backend.entities.User;
 import com.rafaelrocha.backend.repositories.UserRepository;
-import com.rafaelrocha.backend.repositories.exceptions.FieldMessage;
+import com.rafaelrocha.backend.resources.exceptions.FieldMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 

@@ -1,4 +1,4 @@
-package com.rafaelrocha.backend.repositories.exceptions;
+package com.rafaelrocha.backend.resources.exceptions;
 
 import java.io.Serializable;
 import java.util.ArrayList;

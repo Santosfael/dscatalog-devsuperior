@@ -9,7 +9,7 @@ import javax.validation.ConstraintValidatorContext;
 import com.rafaelrocha.backend.dto.UserInsertDTO;
 import com.rafaelrocha.backend.entities.User;
 import com.rafaelrocha.backend.repositories.UserRepository;
-import com.rafaelrocha.backend.repositories.exceptions.FieldMessage;
+import com.rafaelrocha.backend.resources.exceptions.FieldMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
