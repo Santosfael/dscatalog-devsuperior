@@ -1,7 +1,7 @@
 import axios, { Method } from "axios";
 import qs from "qs";
 
-import { CLIENT_ID, CLIENT_SECRET } from "./auth";
+import { CLIENT_ID, CLIENT_SECRET, getSessionData } from "./auth";
 
 type RequestParams = {
     method?: Method;
@@ -28,7 +28,16 @@ export function Api({ method = 'GET', url, data, params, headers }: RequestParam
     });
 };
 
-export function LoginApi( loginData: LoginData) {
+export function PrivateRequestApi({ method = 'GET', url, data, params }: RequestParams) {
+    const sessionData = getSessionData();
+    const headers = {
+        Authorization: `Bearer ${sessionData.access_token}`
+    }
+
+    return Api({ method, url, data, params, headers });
+}
+
+export function LoginApi(loginData: LoginData) {
     const token = `${CLIENT_ID}:${CLIENT_SECRET}`;
 
     const headers = {
@@ -36,7 +45,7 @@ export function LoginApi( loginData: LoginData) {
         'Content-Type': 'application/x-www-form-urlencoded'
     };
 
-    const payload = qs.stringify({...loginData, grant_type: 'password'});
+    const payload = qs.stringify({ ...loginData, grant_type: 'password' });
 
     return Api({ url: '/oauth/token', data: payload, method: 'POST', headers });
 };

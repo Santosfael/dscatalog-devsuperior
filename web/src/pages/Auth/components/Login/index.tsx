@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { useState } from "react";
@@ -9,6 +9,7 @@ import AuthCard from "../Card";
 import { LoginApi } from "core/utils/api";
 
 import "./styles.scss";
+import { saveSessionData } from "core/utils/auth";
 
 type FormData = {
     username: string,
@@ -17,14 +18,19 @@ type FormData = {
 
 function Login() {
 
-    const { register, handleSubmit, formState: { errors}} = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const [ hasError, setHasError ] = useState(false);
+    const [hasError, setHasError] = useState(false);
+    const history = useHistory();
 
     function onSubmit(data: FormData) {
         LoginApi(data)
-        .then(response => {setHasError(false)})
-        .catch(() => setHasError(true));
+            .then(response => {
+                setHasError(false);
+                saveSessionData(response.data);
+                history.push("/admin");
+            })
+            .catch(() => setHasError(true));
     }
 
     return (
@@ -42,7 +48,7 @@ function Login() {
                         placeholder="E-mail"
                         {...register("username", { required: true })}
                     />
-                    { errors.email && <p>E-mail é obrigatório</p> }
+                    {errors.email && <p>E-mail é obrigatório</p>}
 
                     <input
                         type="password"

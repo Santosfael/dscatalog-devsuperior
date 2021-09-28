@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import BaseForm from '../../BaseForm';
-import { Api } from 'core/utils/api';
+import { PrivateRequestApi } from 'core/utils/api';
 import './styles.scss';
 
 type FormState = {
@@ -15,16 +15,16 @@ type FormEvent = React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTe
 function Form() {
     const [formData, setFormData] = useState<FormState>({
         name: '',
-        category:'',
+        category: '',
         price: '',
         description: '',
     });
 
     function handleOnChange(
-            event: FormEvent) {
+        event: FormEvent) {
         const name = event.target.name;
         const value = event.target.value;
-        setFormData(data => ({ ...data, [name]: value}));
+        setFormData(data => ({ ...data, [name]: value }));
     }
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -32,10 +32,10 @@ function Form() {
         const payload = {
             ...formData,
             imgUrl: 'https://cdn.awsli.com.br/600x450/241/241991/produto/67389676/f4d6c341cb.jpg',
-            categories: [{id: formData.category}]
+            categories: [{ id: formData.category }]
         }
-        
-        Api({url:"/products", method:'POST', data: payload})
+
+        PrivateRequestApi({ url: "/products", method: 'POST', data: payload })
     }
 
     return (
@@ -43,8 +43,8 @@ function Form() {
             <BaseForm title="cadastrar um produto">
                 <div className="row">
                     <div className="col-6">
-                        <input 
-                            type="text" 
+                        <input
+                            type="text"
                             name="name"
                             value={formData.name}
                             placeholder="Nome do Produto"
@@ -65,7 +65,7 @@ function Form() {
                             <option value="1">Livros</option>
                         </select>
 
-                        <input 
+                        <input
                             type="text"
                             value={formData.price}
                             name="price"
@@ -77,6 +77,7 @@ function Form() {
                     <div className="col-6">
                         <textarea
                             value={formData.description}
+                            name="description"
                             className="form-control"
                             onChange={handleOnChange}
                             cols={30}
