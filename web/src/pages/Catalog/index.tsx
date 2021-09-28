@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import Api from '../../core/utils/api';
+import { Api } from '../../core/utils/api';
 
 import ProductCardLoader from './components/Loaders/ProductCardLoader';
 import { ProductResponse } from '../../core/types/Product';

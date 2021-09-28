@@ -6,7 +6,7 @@ import ProductDescriptionLoader from '../Loaders/ProductDescriptionLoader';
 import ProductPrice from 'core/components/ProductPrice';
 import ProductInfoLoader from '../Loaders/ProductInfoLoader';
 import { Product } from 'core/types/Product';
-import Api from 'core/utils/api';
+import { Api } from 'core/utils/api';
 import './styles.scss';
 
 type ParamsType = {

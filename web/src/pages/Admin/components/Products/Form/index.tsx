@@ -1,6 +1,6 @@
-import Api from 'core/utils/api';
 import React, { useState } from 'react';
 import BaseForm from '../../BaseForm';
+import { Api } from 'core/utils/api';
 import './styles.scss';
 
 type FormState = {

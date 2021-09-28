@@ -1,21 +1,42 @@
 import axios, { Method } from "axios";
+import qs from "qs";
+
+import { CLIENT_ID, CLIENT_SECRET } from "./auth";
 
 type RequestParams = {
     method?: Method;
     url: string;
-    data?: object;
+    data?: object | string;
     params?: object;
+    headers?: object;
 }
 
-const BASE_URL = 'http://localhost:3000';
+type LoginData = {
+    username: string;
+    password: string;
+}
 
-function Api({ method = 'GET', url, data, params }: RequestParams) {
+const BASE_URL = 'http://localhost:8080';
+
+export function Api({ method = 'GET', url, data, params, headers }: RequestParams) {
     return axios({
         method,
         baseURL: `${BASE_URL}${url}`,
         data,
-        params
+        params,
+        headers
     });
-}
+};
 
-export default Api;
+export function LoginApi( loginData: LoginData) {
+    const token = `${CLIENT_ID}:${CLIENT_SECRET}`;
+
+    const headers = {
+        Authorization: `Basic ${window.btoa(token)}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+    };
+
+    const payload = qs.stringify({...loginData, grant_type: 'password'});
+
+    return Api({ url: '/oauth/token', data: payload, method: 'POST', headers });
+};
