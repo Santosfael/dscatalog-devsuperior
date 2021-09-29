@@ -42,20 +42,48 @@ function Login() {
                     </div>
                 )}
                 <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
-                    <input
-                        type="email"
-                        className="form-control input-base margin-bottom-30"
-                        placeholder="E-mail"
-                        {...register("username", { required: true })}
-                    />
-                    {errors.email && <p>E-mail é obrigatório</p>}
+                    <div className="margin-bottom-30">
+                        <input
+                            type="email"
+                            className={`form-control input-base ${errors.username ? 'is-invalid' : ''}`}
+                            placeholder="E-mail"
+                            {...register("username",
+                                {
+                                    required: "Campo obrigatório",
+                                    pattern: {
+                                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                        message: "E-mail inválido"
+                                    }
+                                })}
+                        />
 
-                    <input
-                        type="password"
-                        className="form-control input-base"
-                        placeholder="Senha"
-                        {...register("password", { required: true })}
-                    />
+                        {errors.username && (
+                            <p className="invalid-feedback d-block">
+                                {errors.username.message}
+                            </p>
+                        )}
+                    </div>
+
+                    <div>
+                        <input
+                            type="password"
+                            className={`form-control input-base ${errors.password ? 'is-invalid' : ''}`}
+                            placeholder="Senha"
+                            {...register("password",
+                                {
+                                    required: "Campo obrigatório",
+                                    minLength: {
+                                        value: 5,
+                                        message: "Sua senha é acima de 5 caracteres"
+                                    }
+                                })}
+                        />
+                        {errors.password && (
+                            <div className="invalid-feedback d-block">
+                                {errors.password.message}
+                            </div>
+                        )}
+                    </div>
                     <Link to="/admin/auth/recover" className="link-recover">
                         Esqueci a senha?
                     </Link>
