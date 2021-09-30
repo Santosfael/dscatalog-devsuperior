@@ -51,7 +51,7 @@ export function isAuthenticated() {
 };
 
 export function isAllowedByRole(routeRoles: Role[] = []) {
-    if(routeRoles.length === 0) {
+    if (routeRoles.length === 0) {
         return true;
     }
 

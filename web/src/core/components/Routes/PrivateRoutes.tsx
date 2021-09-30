@@ -14,7 +14,7 @@ function PrivateRoute({ children, path, allowedRoutes }: Props) {
         <Route
             path={path}
             render={({ location }) => {
-                if(!isAuthenticated()) {
+                if (!isAuthenticated()) {
                     return (
                         <Redirect
                             to={{
@@ -23,7 +23,7 @@ function PrivateRoute({ children, path, allowedRoutes }: Props) {
                             }}
                         />
                     )
-                } else if ( isAuthenticated() && !isAllowedByRole(allowedRoutes)) {
+                } else if (isAuthenticated() && !isAllowedByRole(allowedRoutes)) {
                     return (
                         <Redirect to={{ pathname: "/admin" }} />
                     )
