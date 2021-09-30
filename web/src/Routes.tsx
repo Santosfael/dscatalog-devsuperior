@@ -31,12 +31,12 @@ function Routes() {
                 />
 
                 <Redirect
-                    from="/admin/auth"
-                    to="/admin/auth/login"
+                    from="/auth"
+                    to="/auth/login"
                     exact
                 />
                 <Route
-                    path="/admin/auth"
+                    path="/auth"
                     component={Auth}
                 />
 

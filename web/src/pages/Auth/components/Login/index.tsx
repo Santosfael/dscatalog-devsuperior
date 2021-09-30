@@ -28,7 +28,7 @@ function Login() {
     const history = useHistory();
     const location = useLocation<LocationState>();
 
-    const { from } = location.state || {from: { pathname: "/admin"}};
+    const { from } = location.state || { from: { pathname: "/admin" } };
 
     function onSubmit(data: FormData) {
         LoginApi(data)
@@ -91,7 +91,7 @@ function Login() {
                             </div>
                         )}
                     </div>
-                    <Link to="/admin/auth/recover" className="link-recover">
+                    <Link to="/auth/recover" className="link-recover">
                         Esqueci a senha?
                     </Link>
 
@@ -102,7 +102,7 @@ function Login() {
                         <span className="not-registered">
                             Não tem cadastro?
                         </span>
-                        <Link to="/admin/auth/register" className="link-register">
+                        <Link to="/auth/register" className="link-register">
                             CADASTRAR
                         </Link>
                     </div>

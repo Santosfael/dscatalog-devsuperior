@@ -20,9 +20,9 @@ function Auth() {
             </div>
             <div className="auth-content">
                 <Switch>
-                    <Route path="/admin/auth/login" component={Login} />
-                    <Route path="/admin/auth/register" component={Register} />
-                    <Route path="/admin/auth/recover" component={Recover} />
+                    <Route path="/auth/login" component={Login} />
+                    <Route path="/auth/register" component={Register} />
+                    <Route path="/auth/recover" component={Recover} />
                 </Switch>
             </div>
         </div>
