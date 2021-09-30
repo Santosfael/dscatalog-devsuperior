@@ -1,7 +1,6 @@
 import { Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import ProductDetails from './pages/Catalog/components/ProductDetails';
-import PrivateRoute from 'core/components/Routes/PrivateRoutes';
 import Navbar from './core/components/Navbar';
 import history from 'core/utils/history';
 import Catalog from './pages/Catalog';
@@ -47,9 +46,9 @@ function Routes() {
                     exact
                 />
 
-                <PrivateRoute path="/admin">
+                <Route path="/admin">
                     <Admin />
-                </PrivateRoute>
+                </Route>
             </Switch>
         </Router>
     )

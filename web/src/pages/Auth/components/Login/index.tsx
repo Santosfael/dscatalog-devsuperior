@@ -1,4 +1,4 @@
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { useState } from "react";
@@ -16,19 +16,26 @@ type FormData = {
     password: string,
 }
 
+type LocationState = {
+    from: string;
+}
+
 function Login() {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const [hasError, setHasError] = useState(false);
     const history = useHistory();
+    const location = useLocation<LocationState>();
+
+    const { from } = location.state || {from: { pathname: "/admin"}};
 
     function onSubmit(data: FormData) {
         LoginApi(data)
             .then(response => {
                 setHasError(false);
                 saveSessionData(response.data);
-                history.push("/admin");
+                history.replace(from);
             })
             .catch(() => setHasError(true));
     }

@@ -12,7 +12,7 @@ type LoginResponse = {
     userId: number;
 };
 
-type Role = 'ROLE_OPERATOR' | 'ROLE_ADMIN';
+export type Role = 'ROLE_OPERATOR' | 'ROLE_ADMIN';
 
 type AccessToken = {
     exp: number;
@@ -41,15 +41,20 @@ export function getAccessTokenDecoded() {
 export function isTokenValid() {
     const { exp } = getAccessTokenDecoded();
 
-    if (Date.now() <= (exp * 1000)) {
-        return true;
-    } else {
-        return false;
-    }
-}
+    return Date.now() <= (exp * 1000);
+};
 
 export function isAuthenticated() {
     const sessionData = getSessionData();
 
     return sessionData.access_token && isTokenValid();
+};
+
+export function isAllowedByRole(routeRoles: Role[] = []) {
+    if(routeRoles.length === 0) {
+        return true;
+    }
+
+    const { authorities } = getAccessTokenDecoded();
+    return routeRoles.some(role => authorities.includes(role));
 }

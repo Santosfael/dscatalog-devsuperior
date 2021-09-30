@@ -1,18 +1,22 @@
-import { Route, Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import Products from "./components/Products";
+
+import PrivateRoute from 'core/components/Routes/PrivateRoutes';
 
 function AdminRoutes() {
     return (
         <Switch>
-            <Route path="/admin/products" component={Products} />
+            <PrivateRoute path="/admin/products" >
+                <Products />
+            </PrivateRoute>
 
-            <Route path="/admin/categories">
+            <PrivateRoute path="/admin/categories">
                 <h1>Category</h1>
-            </Route>
+            </PrivateRoute>
 
-            <Route path="/admin/users">
+            <PrivateRoute path="/admin/users" allowedRoutes={['ROLE_ADMIN']}>
                 <h1>User</h1>
-            </Route>
+            </PrivateRoute>
         </Switch>
     );
 };
