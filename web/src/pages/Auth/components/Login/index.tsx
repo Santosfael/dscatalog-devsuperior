@@ -11,7 +11,7 @@ import { LoginApi } from "core/utils/api";
 import "./styles.scss";
 import { saveSessionData } from "core/utils/auth";
 
-type FormData = {
+type FormState = {
     username: string,
     password: string,
 }
@@ -30,7 +30,7 @@ function Login() {
 
     const { from } = location.state || { from: { pathname: "/admin" } };
 
-    function onSubmit(data: FormData) {
+    function onSubmit(data: FormState) {
         LoginApi(data)
             .then(response => {
                 setHasError(false);
