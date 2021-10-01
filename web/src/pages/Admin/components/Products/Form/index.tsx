@@ -1,8 +1,10 @@
-import React from 'react';
-import BaseForm from '../../BaseForm';
-import { PrivateRequestApi } from 'core/utils/api';
-import './styles.scss';
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router';
+import { toast } from 'react-toastify';
+
+import { PrivateRequestApi } from 'core/utils/api';
+import BaseForm from '../../BaseForm';
+import './styles.scss';
 
 type FormState = {
     name: string;
@@ -14,10 +16,18 @@ type FormState = {
 function Form() {
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormState>();
+    const history = useHistory();
 
     function onSubmit(data: FormState) {
 
         PrivateRequestApi({ url: "/products", method: 'POST', data })
+            .then(() => {
+                toast.info("Produto salvo com sucesso!");
+                history.push('admin/products');
+            })
+            .catch(() => {
+                toast.error("Erro ao salvar o produto!");
+            });
     }
 
     return (
