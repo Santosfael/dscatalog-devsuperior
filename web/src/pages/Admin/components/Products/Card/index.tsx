@@ -5,9 +5,10 @@ import './styles.scss';
 
 type Props = {
     product: Product;
+    onRemove: (productId: number) => void;
 }
 
-function Card({ product }: Props) {
+function Card({ product, onRemove }: Props) {
     return (
         <div className="card-base product-card-admin">
             <div className="row">
@@ -41,13 +42,13 @@ function Card({ product }: Props) {
                         EDITAR
                     </Link>
 
-                    <Link
-                        to={`/admin/products/${product.id}`}
+                    <button
+                        onClick={() => onRemove(product.id)}
                         type="button"
                         className="btn btn-outline-danger border-radius-10"
                     >
                         EXCLUIR
-                    </Link>
+                    </button>
                 </div>
                 </div>
             </div>

@@ -1,12 +1,13 @@
 import { useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { ProductResponse } from "core/types/Product";
 import Pagination from "core/components/Pagination";
-import { Api } from "core/utils/api";
+import { Api, PrivateRequestApi } from "core/utils/api";
 
 import Card from "../Card";
 import './styles.scss';
+import { toast } from "react-toastify";
 
 function List() {
     const history = useHistory();
@@ -14,11 +15,7 @@ function List() {
     const [isLoading, setIsLoading] = useState(false);
     const [activePage, setActivePage] = useState(0);
 
-    function handleCreate() {
-        history.push('/admin/products/create');
-    };
-
-    useEffect(() => {
+    const getProducts = useCallback(() => {
         const params = {
             page: activePage,
             linesPerPage: 4
@@ -30,7 +27,30 @@ function List() {
           .finally(()=> {
             setIsLoading(false);
           });
-    },[activePage]);
+    }, [activePage]);
+
+    function handleCreate() {
+        history.push('/admin/products/create');
+    };
+
+    useEffect(() => {
+        getProducts();
+    },[getProducts]);
+
+    function onRemove(productId: number) {
+        const confirm = window.confirm("Deseja realmente excluir?");
+        if(confirm) {
+            PrivateRequestApi({url: `/products/${productId}`, method: 'DELETE'})
+            .then(() => {
+                toast.info("Produto removido com sucesso!");
+                getProducts();
+            })
+            .catch(() => {
+                toast.error("Erro ao remover o produto!");
+            });
+        }
+        
+    }
 
     return (
         <div className="admin-product-list">
@@ -41,7 +61,7 @@ function List() {
             <div className="admin-list-container">
                 {
                     productResponse?.content.map((product) => (
-                        <Card product={product} key={product.id} />
+                        <Card product={product} key={product.id} onRemove={onRemove} />
                     ))
                 }
                 {
