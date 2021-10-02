@@ -4,9 +4,10 @@ import './styles.scss';
 type Props = {
     title: string;
     children: React.ReactNode;
+    labelButton: string;
 }
 
-function BaseForm({ title, children }: Props) {
+function BaseForm({ title, children, labelButton }: Props) {
     const history = useHistory();
 
     function handleCancel() {
@@ -27,7 +28,7 @@ function BaseForm({ title, children }: Props) {
                     CANCELAR
                 </button>
                 <button className="btn btn-primary border-radius-10 btn-cadastrar">
-                    CADASTRAR
+                    {labelButton}
                 </button>
             </div>
         </div>

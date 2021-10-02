@@ -14,8 +14,6 @@ function List() {
     const [isLoading, setIsLoading] = useState(false);
     const [activePage, setActivePage] = useState(0);
 
-    console.log(productResponse);
-
     function handleCreate() {
         history.push('/admin/products/create');
     };

@@ -55,10 +55,10 @@ public class ProductService {
     public ProductDTO insert(ProductDTO productDTO) {
         Product productEntity = new Product();
         copyDtoToEntity(productDTO, productEntity);
-        if(productEntity.getCategories().size() == 0) {
+        /*if(productEntity.getCategories().size() == 0) {
             Category category = categoryRepository.getOne(1L);
             productEntity.getCategories().add(category);
-        }
+        }*/
         productEntity = productRepository.save(productEntity);
         return new ProductDTO(productEntity);
     }
@@ -68,10 +68,10 @@ public class ProductService {
         try {
             Product productEntity = productRepository.getOne(id);
             copyDtoToEntity(productDTO, productEntity);
-            if(productEntity.getCategories().size() == 0) {
+            /*if(productEntity.getCategories().size() == 0) {
                 Category category = categoryRepository.getOne(1L);
                 productEntity.getCategories().add(category);
-            }
+            }*/
             productEntity = productRepository.save(productEntity);
 
             return new ProductDTO(productEntity);

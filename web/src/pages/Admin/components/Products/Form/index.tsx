@@ -1,10 +1,11 @@
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { toast } from 'react-toastify';
 
-import { PrivateRequestApi } from 'core/utils/api';
+import { Api, PrivateRequestApi } from 'core/utils/api';
 import BaseForm from '../../BaseForm';
 import './styles.scss';
+import { useEffect } from 'react';
 
 type FormState = {
     name: string;
@@ -13,14 +14,37 @@ type FormState = {
     imgUrl: string;
 }
 
+type ParamsType = {
+    productId: string;
+}
+
 function Form() {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FormState>();
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormState>();
     const history = useHistory();
+    const { productId } = useParams<ParamsType>();
+    const isEditing = productId !== 'create';
+    const formTitle = isEditing ? "editar produto" : "cadastrar um produto";
+    const formButton = isEditing ? "SALVAR" : "CADASTRAR";
+
+    useEffect(() => {
+       if(isEditing) {
+        Api({url: `/products/${productId}`})
+        .then(response => {
+            setValue('name', response.data.name);
+            setValue('price', response.data.price);
+            setValue('description', response.data.description);
+            setValue('imgUrl', response.data.imgUrl);
+        });
+       }
+    }, [productId, isEditing, setValue]);
 
     function onSubmit(data: FormState) {
 
-        PrivateRequestApi({ url: "/products", method: 'POST', data })
+        PrivateRequestApi({
+            url: isEditing ? `/products/${productId}` : "/products",
+            method: isEditing ? 'PUT' : 'POST',
+            data })
             .then(() => {
                 toast.info("Produto salvo com sucesso!");
                 history.push('admin/products');
@@ -32,7 +56,10 @@ function Form() {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <BaseForm title="cadastrar um produto">
+            <BaseForm 
+                title={formTitle}
+                labelButton={formButton}
+            >
                 <div className="row">
                     <div className="col-6">
                         <div className="margin-bottom-30">

@@ -7,11 +7,7 @@ function ProductsRoutes() {
         <Switch>
             <Route path="/admin/products" exact component={List} />
 
-            <Route path="/admin/products/create" component={Form} />
-
-            <Route path="/admin/products/:productId">
-                <h1>editar produto</h1>
-            </Route>
+            <Route path="/admin/products/:productId" component={Form} />
         </Switch>
     );
 };
