@@ -1,13 +1,14 @@
-import { useHistory } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
+import { Api, PrivateRequestApi } from "core/utils/api";
 import { ProductResponse } from "core/types/Product";
 import Pagination from "core/components/Pagination";
-import { Api, PrivateRequestApi } from "core/utils/api";
+import CardLoader from "../Loaders/CardLoader";
 
 import Card from "../Card";
 import './styles.scss';
-import { toast } from "react-toastify";
 
 function List() {
     const history = useHistory();
@@ -59,10 +60,14 @@ function List() {
             </button>
 
             <div className="admin-list-container">
-                {
-                    productResponse?.content.map((product) => (
-                        <Card product={product} key={product.id} onRemove={onRemove} />
-                    ))
+            {
+                    isLoading ? <CardLoader /> : (
+                        productResponse?.content.map(product => (
+                            productResponse?.content.map((product) => (
+                                <Card product={product} key={product.id} onRemove={onRemove} />
+                            ))
+                        ))
+                    )
                 }
                 {
                 productResponse && (
