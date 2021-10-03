@@ -1,17 +1,21 @@
-import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+
 import { useHistory, useParams } from 'react-router';
+import { useForm, Controller } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import Select from 'react-select';
 
 import { Api, PrivateRequestApi } from 'core/utils/api';
+import { Category } from 'core/types/Product';
 import BaseForm from '../../BaseForm';
 import './styles.scss';
-import { useEffect } from 'react';
 
 type FormState = {
     name: string;
     price: string;
     description: string;
     imgUrl: string;
+    categories: Category[];
 }
 
 type ParamsType = {
@@ -20,9 +24,11 @@ type ParamsType = {
 
 function Form() {
 
-    const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormState>();
+    const { register, handleSubmit, formState: { errors }, setValue, control } = useForm<FormState>();
     const history = useHistory();
     const { productId } = useParams<ParamsType>();
+    const [ isLoadingCategories, setIsLoadingCategories ] = useState(false);
+    const [ categories, setCategories ] = useState<Category[]>([]);
     const isEditing = productId !== 'create';
     const formTitle = isEditing ? "editar produto" : "cadastrar um produto";
     const formButton = isEditing ? "SALVAR" : "CADASTRAR";
@@ -39,6 +45,13 @@ function Form() {
        }
     }, [productId, isEditing, setValue]);
 
+    useEffect(() => {
+        setIsLoadingCategories(true);
+        Api({url: "/categories"})
+            .then(response => setCategories(response.data.content))
+            .finally(() => setIsLoadingCategories(false));
+    },[]);
+
     function onSubmit(data: FormState) {
 
         PrivateRequestApi({
@@ -47,7 +60,7 @@ function Form() {
             data })
             .then(() => {
                 toast.info("Produto salvo com sucesso!");
-                history.push('admin/products');
+                history.push('/admin/products');
             })
             .catch(() => {
                 toast.error("Erro ao salvar o produto!");
@@ -87,6 +100,31 @@ function Form() {
                         </div>
 
                         <div className="margin-bottom-30">
+                                <Controller
+                                    name="categories"
+                                    control={control}
+                                    rules={{ required: true }}
+                                    render={({field}) => (
+                                        <Select
+                                            {...field} 
+                                            options={categories}
+                                            isLoading={isLoadingCategories}
+                                            getOptionLabel={(category: Category) => category.name}
+                                            getOptionValue={(category: Category) => String(category.id)}
+                                            classNamePrefix="categories-select"
+                                            placeholder="Categoria"
+                                            isMulti
+                                        />)
+                                    }
+                                />
+                                {errors.categories && (
+                                <p className="invalid-feedback d-block">
+                                    Escolha pelo menos uma categoria
+                                </p>
+                            )}
+                        </div>
+
+                        <div className="margin-bottom-30">
                             <input
                                 type="number"
                                 {...register("price", { required: "Campo obrigatório" })}
@@ -115,19 +153,6 @@ function Form() {
                                 </p>
                             )}
                         </div>
-
-                        {/* <select 
-                            name="category"
-                            value={formData.category}
-                            className="form-select mb-5 input-base"
-                            onChange={handleOnChange}
-                            aria-label="Selecione uma categoria"
-                        >
-                            <option selected>Selecione uma categoria</option>
-                            <option value="3">Computadores</option>
-                            <option value="2">Eletrônicos</option>
-                            <option value="1">Livros</option>
-                        </select> */}
                     </div>
                     <div className="col-6">
                         <textarea
