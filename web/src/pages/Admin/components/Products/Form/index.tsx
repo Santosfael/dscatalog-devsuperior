@@ -10,6 +10,7 @@ import { Category } from 'core/types/Product';
 import BaseForm from '../../BaseForm';
 import './styles.scss';
 import PriceField from './components/PriceField';
+import ImageUpload from '../ImageUpload';
 
 export type FormState = {
     name: string;
@@ -136,18 +137,7 @@ function Form() {
                         </div>
 
                         <div className="margin-bottom-30">
-                            <input
-                                type="text"
-                                {...register("imgUrl", { required: "Campo obrigatório" })}
-                                placeholder="Url da imagem"
-                                className="form-control input-base"
-                            />
-
-                            {errors.imgUrl && (
-                                <p className="invalid-feedback d-block">
-                                    {errors.imgUrl.message}
-                                </p>
-                            )}
+                            <ImageUpload />
                         </div>
                     </div>
                     <div className="col-6">
