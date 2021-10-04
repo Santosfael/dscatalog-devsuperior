@@ -7,21 +7,24 @@ import { Api } from 'core/utils/api';
 
 import './styles.scss';
 
-export type FilterForm = {
-    name?: string;
-    categoryId?: number;
-}
-
 type Props = {
-    onSearch: (filter: FilterForm) => void;
+    name?: string;
+    handleChangeName: (name: string) => void;
+    category?: Category;
+    handleChangeCategory: (category: Category) => void;
+    clearFilters: () => void;
 }
 
-function ProductFilters({ onSearch }: Props) {
+function ProductFilters({ name,
+    handleChangeName,
+    category,
+    handleChangeCategory,
+    clearFilters
+}: Props) {
 
     const [categories, setCategories] = useState<Category[]>([]);
     const [isLoadingCategories, setIsLoadingCategories] = useState(false);
-    const [name, setName] = useState('');
-    const [category, setCategory] = useState<Category>();
+
 
     useEffect(() => {
         setIsLoadingCategories(true);
@@ -30,23 +33,7 @@ function ProductFilters({ onSearch }: Props) {
             .finally(() => setIsLoadingCategories(false));
     }, []);
 
-    function handleChangeName(name: string) {
-        setName(name);
 
-        onSearch({ name, categoryId: category?.id });
-    };
-
-    function handleChangeCategory(category: Category) {
-        setCategory(category);
-
-        onSearch({ name, categoryId: category?.id });
-    };
-
-    function clearFilters() {
-        setCategory(undefined);
-        setName('');
-        onSearch({ name: '', categoryId: undefined });
-    }
 
     return (
         <div className="card-base product-filters-container">
