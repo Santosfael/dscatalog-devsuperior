@@ -62,7 +62,7 @@ function Form() {
     function onSubmit(data: FormState) {
         const payload = {
             ...data,
-            imgUrl: uploadedImgUrl
+            imgUrl: uploadedImgUrl || productImgUrl
         }
         PrivateRequestApi({
             url: isEditing ? `/products/${productId}` : "/products",

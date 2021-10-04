@@ -33,23 +33,23 @@ function Card({ product, onRemove }: Props) {
                     }
                 </div>
                 <div className="col-3 pt-3 pe-5">
-                <div className="d-grid gap-2">
-                    <Link
-                        to={`/admin/products/${product.id}`}
-                        type="button"
-                        className="btn btn-outline-secondary border-radius-10 mb-3 btn-edit"
-                    >
-                        EDITAR
-                    </Link>
+                    <div className="d-grid gap-2">
+                        <Link
+                            to={`/admin/products/${product.id}`}
+                            type="button"
+                            className="btn btn-outline-secondary border-radius-10 mb-3"
+                        >
+                            EDITAR
+                        </Link>
 
-                    <button
-                        onClick={() => onRemove(product.id)}
-                        type="button"
-                        className="btn btn-outline-danger border-radius-10"
-                    >
-                        EXCLUIR
-                    </button>
-                </div>
+                        <button
+                            onClick={() => onRemove(product.id)}
+                            type="button"
+                            className="btn btn-outline-danger border-radius-10"
+                        >
+                            EXCLUIR
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
