@@ -29,38 +29,46 @@ function Form() {
     const { register, handleSubmit, formState: { errors }, setValue, control } = useForm<FormState>();
     const history = useHistory();
     const { productId } = useParams<ParamsType>();
-    const [ isLoadingCategories, setIsLoadingCategories ] = useState(false);
-    const [ categories, setCategories ] = useState<Category[]>([]);
+    const [isLoadingCategories, setIsLoadingCategories] = useState(false);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [uploadedImgUrl, setUploadedImgUrl] = useState('');
+    const [productImgUrl, setProductImgUrl] = useState('');
+
     const isEditing = productId !== 'create';
     const formTitle = isEditing ? "editar produto" : "cadastrar um produto";
     const formButton = isEditing ? "SALVAR" : "CADASTRAR";
 
     useEffect(() => {
-       if(isEditing) {
-        Api({url: `/products/${productId}`})
-        .then(response => {
-            setValue('name', response.data.name);
-            setValue('price', response.data.price);
-            setValue('description', response.data.description);
-            setValue('imgUrl', response.data.imgUrl);
-            setValue('categories', response.data.categories);
-        });
-       }
+        if (isEditing) {
+            Api({ url: `/products/${productId}` })
+                .then(response => {
+                    setValue('name', response.data.name);
+                    setValue('price', response.data.price);
+                    setValue('description', response.data.description);
+                    setValue('categories', response.data.categories);
+
+                    setProductImgUrl(response.data.imgUrl);
+                });
+        }
     }, [productId, isEditing, setValue]);
 
     useEffect(() => {
         setIsLoadingCategories(true);
-        Api({url: "/categories"})
+        Api({ url: "/categories" })
             .then(response => setCategories(response.data.content))
             .finally(() => setIsLoadingCategories(false));
-    },[]);
+    }, []);
 
     function onSubmit(data: FormState) {
-
+        const payload = {
+            ...data,
+            imgUrl: uploadedImgUrl
+        }
         PrivateRequestApi({
             url: isEditing ? `/products/${productId}` : "/products",
             method: isEditing ? 'PUT' : 'POST',
-            data })
+            data: payload
+        })
             .then(() => {
                 toast.info("Produto salvo com sucesso!");
                 history.push('/admin/products');
@@ -68,11 +76,15 @@ function Form() {
             .catch(() => {
                 toast.error("Erro ao salvar o produto!");
             });
+    };
+
+    function onUploadSuccess(imgUrl: string) {
+        setUploadedImgUrl(imgUrl);
     }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <BaseForm 
+            <BaseForm
                 title={formTitle}
                 labelButton={formButton}
             >
@@ -107,9 +119,9 @@ function Form() {
                                 name="categories"
                                 control={control}
                                 rules={{ required: true }}
-                                render={({field}) => (
+                                render={({ field }) => (
                                     <Select
-                                        {...field} 
+                                        {...field}
                                         options={categories}
                                         isLoading={isLoadingCategories}
                                         getOptionLabel={(category: Category) => category.name}
@@ -137,7 +149,7 @@ function Form() {
                         </div>
 
                         <div className="margin-bottom-30">
-                            <ImageUpload />
+                            <ImageUpload onUploadSuccess={onUploadSuccess} productImgUrl={productImgUrl} />
                         </div>
                     </div>
                     <div className="col-6">
