@@ -9,8 +9,9 @@ import { Api, PrivateRequestApi } from 'core/utils/api';
 import { Category } from 'core/types/Product';
 import BaseForm from '../../BaseForm';
 import './styles.scss';
+import PriceField from './components/PriceField';
 
-type FormState = {
+export type FormState = {
     name: string;
     price: string;
     description: string;
@@ -101,24 +102,24 @@ function Form() {
                         </div>
 
                         <div className="margin-bottom-30">
-                                <Controller
-                                    name="categories"
-                                    control={control}
-                                    rules={{ required: true }}
-                                    render={({field}) => (
-                                        <Select
-                                            {...field} 
-                                            options={categories}
-                                            isLoading={isLoadingCategories}
-                                            getOptionLabel={(category: Category) => category.name}
-                                            getOptionValue={(category: Category) => String(category.id)}
-                                            classNamePrefix="categories-select"
-                                            placeholder="Categorias"
-                                            isMulti
-                                        />)
-                                    }
-                                />
-                                {errors.categories && (
+                            <Controller
+                                name="categories"
+                                control={control}
+                                rules={{ required: true }}
+                                render={({field}) => (
+                                    <Select
+                                        {...field} 
+                                        options={categories}
+                                        isLoading={isLoadingCategories}
+                                        getOptionLabel={(category: Category) => category.name}
+                                        getOptionValue={(category: Category) => String(category.id)}
+                                        classNamePrefix="categories-select"
+                                        placeholder="Categorias"
+                                        isMulti
+                                    />)
+                                }
+                            />
+                            {errors.categories && (
                                 <p className="invalid-feedback d-block">
                                     Escolha pelo menos uma categoria
                                 </p>
@@ -126,13 +127,7 @@ function Form() {
                         </div>
 
                         <div className="margin-bottom-30">
-                            <input
-                                type="number"
-                                {...register("price", { required: "Campo obrigatório" })}
-                                placeholder="Preço"
-                                className="form-control input-base"
-                            />
-
+                            <PriceField control={control} />
                             {errors.price && (
                                 <p className="invalid-feedback d-block">
                                     {errors.price.message}
