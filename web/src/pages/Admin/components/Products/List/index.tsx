@@ -62,10 +62,8 @@ function List() {
             <div className="admin-list-container">
             {
                     isLoading ? <CardLoader /> : (
-                        productResponse?.content.map(product => (
-                            productResponse?.content.map((product) => (
-                                <Card product={product} key={product.id} onRemove={onRemove} />
-                            ))
+                        productResponse?.content.map((product) => (
+                            <Card product={product} key={product.id} onRemove={onRemove} />
                         ))
                     )
                 }

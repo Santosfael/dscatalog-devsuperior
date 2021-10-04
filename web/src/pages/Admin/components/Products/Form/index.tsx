@@ -41,6 +41,7 @@ function Form() {
             setValue('price', response.data.price);
             setValue('description', response.data.description);
             setValue('imgUrl', response.data.imgUrl);
+            setValue('categories', response.data.categories);
         });
        }
     }, [productId, isEditing, setValue]);
@@ -112,7 +113,7 @@ function Form() {
                                             getOptionLabel={(category: Category) => category.name}
                                             getOptionValue={(category: Category) => String(category.id)}
                                             classNamePrefix="categories-select"
-                                            placeholder="Categoria"
+                                            placeholder="Categorias"
                                             isMulti
                                         />)
                                     }
