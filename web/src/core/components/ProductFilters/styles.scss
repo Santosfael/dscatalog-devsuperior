@@ -48,3 +48,9 @@
         color: #9e9e9e !important;
     };
 };
+
+@media (max-width: 768px) {
+    .product-filters-container {
+        width: 100%;
+    }
+}
