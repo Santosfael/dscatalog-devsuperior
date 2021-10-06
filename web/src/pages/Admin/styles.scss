@@ -21,3 +21,9 @@
     color: #fff;
     border-color: #e1e1e1;
 }
+
+@media (max-width: 768px) {
+    .admin-container {
+        flex-direction: column;
+    }
+}

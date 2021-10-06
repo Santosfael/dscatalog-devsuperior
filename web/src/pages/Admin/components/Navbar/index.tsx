@@ -4,7 +4,7 @@ import './styles.scss';
 
 function Navbar() {
     return (
-        <nav className={"admin-nav-container"}>
+        <nav className="admin-nav-container">
             <ul>
                 <li>
                     <NavLink to="/admin/products" className="admin-nav-item">

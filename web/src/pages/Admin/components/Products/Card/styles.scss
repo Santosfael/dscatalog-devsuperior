@@ -1,5 +1,8 @@
 .product-card-admin {
     margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
     border-radius: 10px;
 
     .product-currency {
@@ -15,10 +18,20 @@
 .product-card-image-admin {
     width: 100px;
     height: 100px;
+    margin: 0 30px;
 };
 
 .product-card-name-admin {
     font-size: 18px;
     line-height: 25px;
     letter-spacing: -0.015em;
+}
+
+@media (max-width: 768px) {
+    .product-card-admin {
+        padding-right: 10px;
+    }
+    .card-content {
+        margin-left: 10px;
+    }
 }
