@@ -52,3 +52,11 @@ CSS puro
         height: 200px;
     }
 }
+
+@media (max-width: 768px) {
+
+    .upload-button-container label {
+        word-wrap: none;
+        width: 285px;
+    }
+}

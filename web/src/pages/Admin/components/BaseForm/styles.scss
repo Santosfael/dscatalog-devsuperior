@@ -22,3 +22,9 @@
 .btn-cadastrar, .btn-cadastrar:hover {
     color: #fff;
 }
+
+@media (max-width: 768px) {
+    .admin-base-form {
+        width: 100%;
+    }
+}
