@@ -16,3 +16,27 @@
 
     counter-reset: #263238;
 }
+
+@media (max-width: 576px) {
+    .auth-card {
+        margin: 0 auto;
+        width: 90vw;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .link-recover {
+        margin-bottom: -60px;
+    }
+
+    .login-submit {
+        margin-top: -100px;
+    }
+
+    .auth-card-title {
+        margin-top: 50px;
+    }
+}

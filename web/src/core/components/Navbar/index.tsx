@@ -59,7 +59,13 @@ function Navbar() {
                             <li>
                                 {
                                     currentUser && (
-                                        <a href="#logout" className="nav-link active d-inline" onClick={() => setDrawerActive(false)} >
+                                        <a href="#logout" 
+                                            className="nav-link active d-inline" 
+                                            onClick={(e) => {
+                                                handleLogout(e);
+                                                setDrawerActive(false);
+                                            }}
+                                        >
                                             {`LOGOUT - ${currentUser}`}
                                         </a>
                                     )

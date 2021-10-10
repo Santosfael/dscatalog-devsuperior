@@ -50,7 +50,7 @@ function ImageUpload({ onUploadSuccess, productImgUrl }: Props) {
     }
 
     return (
-        <div className="row">
+        <div className="upload-img-container">
             <div className="col-6">
                 <div className="upload-button-container">
                     <input
@@ -66,7 +66,7 @@ function ImageUpload({ onUploadSuccess, productImgUrl }: Props) {
                     As imagens devem ser JPG ou PNG e não devem ultrapassar<strong> 5 mb</strong>.
                 </small>
             </div>
-            <div className="col-6 upload-placeholder">
+            <div className="upload-placeholder">
                 {
                     uploadProgress > 0 && (
                         <>

@@ -36,7 +36,7 @@ function ProductDetails() {
                 </Link>
                 <div className="product-details-info">
                     { isLoading ? <ProductInfoLoader /> :
-                        <>
+                        <div className = "product-img-price">
                             <div className="product-details-card text-center">
                                 <img src={product?.imgUrl} alt={product?.name} className="product-details-image" />
                             </div>
@@ -49,7 +49,7 @@ function ProductDetails() {
                                     <ProductPrice price={product?.price} />
                                 }
                             </div>
-                        </>
+                        </div>
                     }
 
                     <div className="product-details-card">

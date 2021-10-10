@@ -88,8 +88,8 @@ function Form() {
                 title={formTitle}
                 labelButton={formButton}
             >
-                <div className="row">
-                    <div className="col-6">
+                <div className="product-form-container">
+                    <div className="container-info">
                         <div className="margin-bottom-30">
                             <input
                                 type="text"
@@ -152,7 +152,7 @@ function Form() {
                             <ImageUpload onUploadSuccess={onUploadSuccess} productImgUrl={productImgUrl} />
                         </div>
                     </div>
-                    <div className="col-6">
+                    <div className="container-info">
                         <textarea
                             {...register("description", { required: "Campo obrigatório" })}
                             className="form-control"

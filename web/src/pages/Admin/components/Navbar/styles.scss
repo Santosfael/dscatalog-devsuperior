@@ -58,3 +58,16 @@
         background: #f2f2f2;
     }
 }
+
+@media (max-width: 576px) {
+    .admin-nav-container {
+        height: 60px;
+    }
+
+    .admin-nav-item {
+        width: 130px;
+        height: 40px;
+
+        font-size: 0.8em;
+    }
+}

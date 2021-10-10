@@ -98,7 +98,7 @@ function Login() {
                     <div className="login-submit">
                         <ButtonIcon text="logar" />
                     </div>
-                    <div className="text-center">
+                    <div className="text-center footer-register">
                         <span className="not-registered">
                             Não tem cadastro?
                         </span>
